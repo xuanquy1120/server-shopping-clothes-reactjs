@@ -5,27 +5,29 @@ export const authService = {
   async login(payload) {
     try {
       const user = await User.findOne({
-        username: payload.username,
+        email: payload.email,
       });
-      if (!user) throw "is";
+      if (!user) {
+        throw "Email does not exist";
+      }
       const checkPassword = await bcrypt.compare(
         payload.password,
         user.password
       );
       if (checkPassword) {
         const jsonObject = {
-          username: user.username,
+          _id: user._id,
         };
         const token = await jwt.sign(jsonObject, process.env.TOKEN_KEY, {
-          expiresIn: 10,
+          expiresIn: 60000,
         });
 
         return {
-          username: user.username,
+          user: user,
           token: token,
         };
       } else {
-        throw "Sai mat khau";
+        throw "wrong password";
       }
     } catch (error) {
       throw error;
