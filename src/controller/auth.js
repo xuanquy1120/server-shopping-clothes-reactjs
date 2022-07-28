@@ -15,18 +15,19 @@ export const authController = {
     try {
       const payload = req.body;
       await authService.register(payload);
-      success(res, payload);
+      success(res, "Successfully registeredAt");
     } catch (error) {
+      // console.log(error)
       failed(res, error);
     }
   },
-  async checkToken(req, res) {
-    try {
-      const payload = req.query.token;
-      const result = await authService.checkToken(payload);
-      success(res, result);
-    } catch (error) {
-      failed(res, error);
-    }
-  },
+  // async checkToken(req, res) {
+  //   try {
+  //     const payload = req.query.token;
+  //     const result = await authService.checkToken(payload);
+  //     success(res, result);
+  //   } catch (error) {
+  //     failed(res, error);
+  //   }
+  // },
 };

@@ -1,26 +1,38 @@
-import mongoose from 'db/mongo'
+import mongoose from "db/mongo";
+import { Schema } from "mongoose";
 
+const cartSchema = new mongoose.Schema({
+  quantity: {type:Number},
+  product: {type:Schema.Types.ObjectId,ref:"products"},
+});
 
-const userSchema = new mongoose.Schema({
-  username: {
-    required: true,
-    trim: true,
-    type: String,
-    unique: true
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      required: true,
+      trim: true,
+      type: String,
+      unique: true,
+    },
+    email: {
+      required: true,
+      trim: true,
+      type: String,
+      unique: true,
+    },
+    cart: [{type:cartSchema}],
+    password: {
+      required: true,
+      trim: true,
+      type: String,
+    },
+    cart: {
+      type: Array,
+    },
   },
-  email: {
-    required: true,
-    trim: true,
-    type: String,
-    unique: true
-  },
-  password: {
-    required: true,
-    trim: true,
-    type: String,
-  },
-}, {
-  timestamps: true
-})
+  {
+    timestamps: true,
+  }
+);
 
-export const User = mongoose.model('users', userSchema)
+export const User = mongoose.model("users", userSchema);
