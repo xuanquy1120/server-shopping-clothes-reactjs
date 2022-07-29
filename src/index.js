@@ -5,7 +5,6 @@ import router from "routes";
 import requestLogger from "middleware/requestLogger";
 import cors from "cors";
 config();
-
 const PORT = process.env.PORT;
 const app = express();
 app.use(json());

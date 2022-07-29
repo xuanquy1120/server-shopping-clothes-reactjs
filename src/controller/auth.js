@@ -17,7 +17,6 @@ export const authController = {
       await authService.register(payload);
       success(res, "Successfully registeredAt");
     } catch (error) {
-      // console.log(error)
       failed(res, error);
     }
   },

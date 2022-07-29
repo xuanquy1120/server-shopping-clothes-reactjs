@@ -5,7 +5,7 @@ export const authService = {
   async login(payload) {
     const user = await User.findOne({
       email: payload.email,
-    });
+    }).populate("cart.product");;
     if (!user) {
       throw "Email does not exist";
     }
@@ -34,7 +34,6 @@ export const authService = {
       newUser.email = payload.email;
       return await newUser.save();
     } catch (err) {
-      // console.log(err.code);
       if (err.code === 11000) throw "Username or Email is invalid";
       throw err;
     }

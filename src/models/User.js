@@ -2,8 +2,8 @@ import mongoose from "db/mongo";
 import { Schema } from "mongoose";
 
 const cartSchema = new mongoose.Schema({
-  quantity: {type:Number},
-  product: {type:Schema.Types.ObjectId,ref:"products"},
+  quantity: { type: Number },
+  product: { type: Schema.Types.ObjectId, ref: "products" },
 });
 
 const userSchema = new mongoose.Schema(
@@ -20,15 +20,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    cart: [{type:cartSchema}],
     password: {
       required: true,
       trim: true,
       type: String,
     },
-    cart: {
-      type: Array,
-    },
+    cart: [{ type: cartSchema }],
   },
   {
     timestamps: true,

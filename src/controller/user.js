@@ -5,9 +5,18 @@ export const userController = {
   async addCartToUser(req, res) {
     try {
         const userID = req.userId
-        const Product = req.body
-        const payload ={userID,Product,quantity:1}
-        const result = await userService.addCartToUser(payload);
+        const payload = req.body
+        const result = await userService.addCartToUser(userID,payload);
+        success(res, result);
+    } catch (error) {
+        failed(res, error);
+    }
+  },
+  async deleteCartUser(req, res) {
+    try {
+        const userID = req.userId
+        const payload = req.params
+        const result = await userService.deleteCartUser(userID,payload);
         success(res, result);
     } catch (error) {
         failed(res, error);
