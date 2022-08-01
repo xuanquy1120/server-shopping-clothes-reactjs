@@ -4,7 +4,8 @@ import { authMiddleware } from "middleware/auth.middleware";
 
 const router = Router();
 
-router.post("/addCartToUser", authMiddleware.isAuthenticated, userController.addCartToUser);
+router.post("/updateCartUser", authMiddleware.isAuthenticated, userController.updateCartToUser);
+router.post("/addCartUser", authMiddleware.isAuthenticated, userController.addCartUser);
 router.delete("/:id", authMiddleware.isAuthenticated, userController.deleteCartUser);
 
 export default router;
