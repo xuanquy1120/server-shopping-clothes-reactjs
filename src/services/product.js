@@ -16,4 +16,31 @@ export const productService = {
     newProduct.image = payload.image;
     return await newProduct.save();
   },
+  async findProduct(payload) {
+    try {
+      const [listProduct, count] = await Promise.all([
+        Product.find({
+          nameProduct: new RegExp(payload.nameProduct, "i"),
+          category: new RegExp(payload.category),
+        })
+          .skip((payload.page - 1) * payload.limit)
+          .limit(payload.limit),
+        Product.countDocuments({
+          nameProduct: new RegExp(payload.nameProduct, "i"),
+        }),
+      ]);
+      if (!listProduct) throw "Invalid";
+      return {
+        data: listProduct,
+        pagination: {
+          total: Math.ceil(count / payload.limit),
+          limit: payload.limit,
+          page: payload.page,
+        },
+      };
+    } catch (error) {
+      log.info(error);
+      throw error;
+    }
+  },
 };

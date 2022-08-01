@@ -19,5 +19,14 @@ export const productController = {
     } catch (error) {
       failed(res, error);
     }
+  },
+  async findProduct(req, res) {
+    try {
+      const payload = req.query;
+      const { data, pagination } = await productService.findProduct(payload);
+      success(res, data, pagination);
+    } catch (error) {
+      failed(res, error);
+    }
   }
 };
