@@ -2,10 +2,22 @@ import { Product } from "models/Product";
 import { log } from "utils";
 
 export const productService = {
-  async getProduct() {
-    const products = await Product.find({});
+  async getProduct(payload) {
+    const [products, count] = await Promise.all([
+      Product.find({})
+        .skip((payload.page - 1) * payload.limit)
+        .limit(payload.limit),
+      Product.countDocuments({}),
+    ]);
     if (!products) throw "Invalid";
-    return products;
+    return {
+      products: products,
+      pagination: {
+        total: Number(Math.ceil(count / payload.limit)),
+        limit: Number(payload.limit),
+        page: Number(payload.page),
+      },
+    };
   },
   async addProduct(payload) {
     const newProduct = new Product();
@@ -18,7 +30,7 @@ export const productService = {
   },
   async findProduct(payload) {
     try {
-      const [listProduct, count] = await Promise.all([
+      const [products, count] = await Promise.all([
         Product.find({
           nameProduct: new RegExp(payload.nameProduct, "i"),
           category: new RegExp(payload.category),
@@ -27,15 +39,20 @@ export const productService = {
           .limit(payload.limit),
         Product.countDocuments({
           nameProduct: new RegExp(payload.nameProduct, "i"),
+          category: new RegExp(payload.category),
         }),
       ]);
-      if (!listProduct) throw "Invalid";
+      if (!products) throw "Invalid";
       return {
-        data: listProduct,
+        products: products,
+        filter: {
+          category: payload.category,
+          nameProduct: payload.nameProduct,
+        },
         pagination: {
-          total: Math.ceil(count / payload.limit),
-          limit: payload.limit,
-          page: payload.page,
+          total: Number(Math.ceil(count / payload.limit)),
+          limit: Number(payload.limit),
+          page: Number(payload.page),
         },
       };
     } catch (error) {

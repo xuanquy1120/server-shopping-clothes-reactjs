@@ -4,7 +4,7 @@ import { failed, success } from "utils";
 export const productController = {
   async getProduct(req, res) {
     try {
-      const payload = req.body;
+      const payload = req.query;
       const result = await productService.getProduct(payload);
       success(res, result);
     } catch (error) {
@@ -23,8 +23,8 @@ export const productController = {
   async findProduct(req, res) {
     try {
       const payload = req.query;
-      const { data, pagination } = await productService.findProduct(payload);
-      success(res, data, pagination);
+      const result = await productService.findProduct(payload);
+      success(res, result);
     } catch (error) {
       failed(res, error);
     }
