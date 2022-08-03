@@ -26,6 +26,6 @@
     "pino-pretty": "^8.1.0"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js"
   }
 }
