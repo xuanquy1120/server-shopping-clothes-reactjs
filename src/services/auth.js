@@ -15,7 +15,7 @@ export const authService = {
         _id: user._id,
       };
       const token = await jwt.sign(jsonObject, process.env.TOKEN_KEY, {
-        expiresIn: 60000,
+        expiresIn: 9000000,
       });
 
       return {
