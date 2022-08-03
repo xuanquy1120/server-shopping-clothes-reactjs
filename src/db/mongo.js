@@ -5,7 +5,7 @@ dotenv.config()
 
 export const connectDatabase=async()=>{
     try{
-        let uri=`mongodb://localhost:27017/bhsoft2022`
+        let uri=`mongodb+srv://admin:khongco123@cluster0.lryrd7f.mongodb.net/?retryWrites=true&w=majority`
         let options={
             connectTimeoutMS:10000,
             useNewUrlParser:true,
