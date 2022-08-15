@@ -34,7 +34,7 @@ export const authService = {
       newUser.email = payload.email;
       return await newUser.save();
     } catch (err) {
-      if (err.code === 11000) throw "Username or Email is invalid";
+      if (err.code === 11000) throw "Email or Username is invalid";
       throw err;
     }
   },
